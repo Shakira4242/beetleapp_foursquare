@@ -1,8 +1,24 @@
+// We need something to gtm
+// We're going to use a list of local business from the internet for this.
+
+// We primarily will convey our intent over voice/text
+// Actually voice is probably the easiest for our customers so voice it is.
+
+// We will sell voice/ai products over the phone just like we reach
+// out to our customers.
+
+// Customers will be able to speak back into the phone and get 
+// a fake phone number with a voice that provides:  
+// 1. information on general business details
+// 2. discounts sales and more
+// 3. a way to easily update prices and more
+
 const fs = require("fs");
 const path = require("path");
 var http = require("http");
 var HttpDispatcher = require("httpdispatcher");
 var WebSocketServer = require("websocket").server;
+
 
 var dispatcher = new HttpDispatcher();
 var wsserver = http.createServer(handleRequest);
@@ -71,6 +87,10 @@ function handleRequest(request, response) {
     console.error(err);
   }
 }
+
+dispatcher.onGet("/", function(req, res){
+  console.log("hello")
+})
 
 dispatcher.onPost("/twiml", function (req, res) {
   console.log("POST TwiML");
@@ -191,16 +211,16 @@ class MediaStream {
         deepgramLive = deepgram.transcription.live({
           punctuate: true,
           language: 'en',
-          model: 'general-enhanced',
+          model: 'phonecall',
           encoding: 'mulaw',
           sample_rate: 8000,
+          endpointing: true,
+          diarize: true,
+          multichannel: true,
         });
 
         const connection = this.connection;
 
-        response_channel.subscribe(function (message) {
-          (async()=>{await reply(streamSid, message.data.text, connection);})();
-        });
 
         // Listen for the connection to close
         deepgramLive.addListener('close', (data) => {
@@ -215,30 +235,43 @@ class MediaStream {
           console.log(error);
         });
 
+        let count = 0
+
         // Listen for any transcripts received from Deepgram
         deepgramLive.addListener('transcriptReceived', (transcription) => {
           // parse transcript 
           const transcript = JSON.parse(transcription);
-          // console.log(transcript)
 
-          // check if transcript has a chanell and the transcript isn't empty
+          
+          // check if transcript has a chanel and the transcript isn't empty
           if (transcript.hasOwnProperty('channel') && transcript.channel.alternatives[0].transcript !== null ) {
             if(transcript.channel.alternatives[0].transcript !== ""){
-              (async()=>{
-                const dialog_response = await openai.createCompletion({
-                  model: "text-davinci-002",
-                  prompt: "I am a customer service bot. If I don't know the answer I respond with unknown.\nQ:" + transcript.channel.alternatives[0].transcript + "A:",
-                  temperature: 0,
-                  max_tokens: 100,
-                  top_p: 1,
-                  frequency_penalty: 0,
-                  presence_penalty: 0,
-                });
 
-                const openai_answer = dialog_response.data.choices[0].text;
+              if(count == 0){
+                (async()=>{await reply(streamSid, 'What is the price of a double bed today?', connection);})();
+                count+=1
+              }
 
-                await channel.publish('message', {"transcript": transcript, "streamSid": this.streamSid, "ai": openai_answer})
-              })();
+              console.log(transcript.channel.alternatives[0])
+
+              // (async()=>{
+              //   const dialog_response = await openai.createCompletion({
+              //     model: "text-davinci-002",
+              //     prompt: "I am a customer service bot. If I don't know the answer I respond with unknown.\nQ:" + transcript.channel.alternatives[0].transcript + "A:",
+              //     temperature: 0,
+              //     max_tokens: 100,
+              //     top_p: 1,
+              //     frequency_penalty: 0,
+              //     presence_penalty: 0,
+              //   });
+
+              //   const openai_answer = dialog_response.data.choices[0].text;
+
+              //   console.log(openai_answer)
+
+              //   await channel.publish('message', {"transcript": transcript, "streamSid": this.streamSid, "ai": openai_answer})
+              // })();
+
             }
           }
         });
