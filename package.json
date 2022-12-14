@@ -6,18 +6,11 @@
   "scripts": {
     "start": "node app.js"
   },
-  "engines": {
-    "node": "18.x"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-polly": "^3.131.0",
     "@deepgram/sdk": "^1.4.2",
-    "@google-cloud/text-to-speech": "^4.0.0",
-    "@resemble/node": "^1.2.1",
-    "@signalwire/node": "^2.5.0",
-    "@signalwire/realtime-api": "^3.2.0",
     "@supabase/storage-js": "^2.0.0",
     "ably": "^1.2.28",
     "alawmulaw": "^6.0.0",
