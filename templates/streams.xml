@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Response>
   <Connect>
-    <Stream url="wss://calls.vetrun.ngrok.io/streams"/>
+    <Stream url="wss://76fa-2603-8081-7001-c8a4-390b-9464-96f0-a82c.ngrok.io/streams"/>
   </Connect>
 </Response>
