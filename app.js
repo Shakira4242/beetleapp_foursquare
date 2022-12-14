@@ -32,18 +32,8 @@ const mediaStreamSaver = new TwilioMediaStreamSaveAudioFile({
   },
 });
 
-
-// realtime websocket to front-end ui
-
-const Ably = require('ably/promises');
-const ably = new Ably.Realtime.Promise('ekO-1g.WAVrLw:5qK15Okc6b2WoLqzRdFq7895g10LY6Dfv3ZT_HZ7E94');
-(async()=>{await ably.connection.once('connected')})();
-console.log('Connected to Ably!');
-const channel = ably.channels.get("phone_data");
-
 // audio file stuff
 
-const alawmulaw = require('alawmulaw');
 const wavefile = require('wavefile');
 const fs = require("fs");
 const path = require("path");
@@ -66,7 +56,6 @@ const stream = require('node:stream');
 const { Deepgram } = require('@deepgram/sdk')
 const deepgram = new Deepgram('6d576c95ecd084248541b0eb7111d813c8a32be2');
 let deepgramLive = null
-const convert = require('pcm-convert')
 
 // aws text-to-speech
 
@@ -219,28 +208,6 @@ const reply = async (streamSid, text, connection) => {
   });
 }
 
-// reply with something.wav file
-
-const static_reply = async(streamSid, connection) => {
-  let wav = new wavefile.WaveFile(fs.readFileSync("./something.wav"))
-
-  wav.toSampleRate(8000)
-  wav.toMuLaw()
-
-  let payload = Buffer.from(wav.data.samples).toString("base64");
-
-  const message = {
-    event: "media",
-    streamSid,
-    media: {
-      "payload": payload,
-    },
-  };
-
-  mediaStreamSaver.twilioStreamMedia(message.media.payload)
-  const messageJSON = JSON.stringify(message);
-  connection.sendUTF(messageJSON)
-}
 // openAI config
 
 const { Configuration, OpenAIApi } = require("openai");
