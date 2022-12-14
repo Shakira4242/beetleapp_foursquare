@@ -1,6 +1,6 @@
 // port
 
-const HTTP_SERVER_PORT = 8080;
+const HTTP_SERVER_PORT = process.env.PORT || 8080;
 
 // server requirements
 
