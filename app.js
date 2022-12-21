@@ -330,6 +330,8 @@ class MediaStream {
                 
                 // send a text message with a transcript 
 
+                console.log(phone_number)
+
                 client.messages
                 .create({
                   body: "You said:" + transcript.channel.alternatives[0].transcript,
