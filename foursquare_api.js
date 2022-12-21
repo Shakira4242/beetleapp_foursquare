@@ -4,17 +4,9 @@ var fetch = require('node-fetch')
 // Find your Account SID and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
 const accountSid = 'ACda04405f0b9725e854d6e81596d25921';
-const authToken = 'e0c8694200fb493efefdaad75b938bec';
+const authToken = process.env.TWILIO_SECRET_KEY;
 const client = require('twilio')(accountSid, authToken);
 
-
-
-// ably stuff
-const Ably = require('ably/promises');
-const ably = new Ably.Realtime.Promise('ekO-1g.WAVrLw:5qK15Okc6b2WoLqzRdFq7895g10LY6Dfv3ZT_HZ7E94');
-(async()=>{await ably.connection.once('connected')})();
-console.log('Connected to Ably!');
-const channel = ably.channels.get("phone_data");
 
 
 const response = fetch("https://api.foursquare.com/v3/places/search?query=pizza&ll=29.55252517029129%2C-98.58001073342784&exclude_all_chains=true&fields=tel&open_now=true",{

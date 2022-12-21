@@ -13,11 +13,11 @@ var wsserver = http.createServer(handleRequest);
 var save_recording = require('./components/save_recording.js')
 
 const accountSid = 'ACda04405f0b9725e854d6e81596d25921';
-const authToken = 'e0c8694200fb493efefdaad75b938bec';
+const authToken = process.env.TWILIO_SECRET_KEY;
 const client = require('twilio')(accountSid, authToken);
 
 const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient('https://bpeqsefkefhjnfshvrck.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJwZXFzZWZrZWZoam5mc2h2cmNrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY2NTAwNDY2MywiZXhwIjoxOTgwNTgwNjYzfQ.5lJMLZYF4Gqpryidn1xL91Fjqk-btWn258lDg_cOscU')
+const supabase = createClient('https://bpeqsefkefhjnfshvrck.supabase.co', process.env.SUPABASE_PUBLIC_KEY)
 
 // twilio streams save audio
 
@@ -54,7 +54,7 @@ const stream = require('node:stream');
 // Deepgram audio transcription
 
 const { Deepgram } = require('@deepgram/sdk')
-const deepgram = new Deepgram('6d576c95ecd084248541b0eb7111d813c8a32be2');
+const deepgram = new Deepgram(process.env.DEEPGRAM_API_KEY);
 let deepgramLive = null
 
 // aws text-to-speech
