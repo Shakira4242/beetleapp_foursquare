@@ -105,10 +105,10 @@ dispatcher.onPost("/sms", function (req, res) {
 
   phone_number = req.params.From
 
-  console.log(req.params.Body);
+  console.log(req.params.Body + " " + phone_number);
 
   (async ()=> {
-    const reply = await openai_reply(req.params.Body, "call_reply"); 
+    const reply = await openai_reply(req.params.Body, "text_reply"); 
 
     console.log(reply);
 
