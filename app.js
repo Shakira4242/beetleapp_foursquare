@@ -110,12 +110,12 @@ dispatcher.onPost("/sms", function (req, res) {
   (async ()=> {
     const reply = await openai_reply(req.params.Body, "text_reply"); 
 
-    console.log(reply)
+    console.log(reply);
 
     client.messages 
     .create({         
       to: phone_number,
-      body: reply,
+      body: reply;,
       from: '+12107960644'
     })
     .then(message => console.log(message.sid)) 
