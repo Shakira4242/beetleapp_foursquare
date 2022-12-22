@@ -108,7 +108,7 @@ dispatcher.onPost("/sms", function (req, res) {
   console.log(req.params.Body);
 
   (async ()=> {
-    const reply = await openai_reply(req.params.Body, "text_reply"); 
+    const reply = await openai_reply(req.params.Body, "call_reply"); 
 
     console.log(reply);
 
