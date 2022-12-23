@@ -86,7 +86,7 @@ function decodeQueryParam(p) {
 dispatcher.onPost("/twiml", function (req, res) {
   console.log("POST TwiML");
 
-  phone_number = req.params.From
+  phone_number = req.params.To
 
   var filePath = path.join(__dirname + "/templates", "streams.xml");
   var stat = fs.statSync(filePath);
@@ -333,7 +333,7 @@ class MediaStream {
                 .create({
                   body: "You said:" + transcript.channel.alternatives[0].transcript,
                   from: '+12107960644',
-                  to: '+12107128563',
+                  to: phone_number,
                 })
                 .then(message => console.log(message.sid));
 
