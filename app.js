@@ -86,7 +86,7 @@ function decodeQueryParam(p) {
 dispatcher.onPost("/twiml", function (req, res) {
   console.log("POST TwiML");
 
-  phone_number = req.params.From
+  phone_number = req.params.To
 
   var filePath = path.join(__dirname + "/templates", "streams.xml");
   var stat = fs.statSync(filePath);
@@ -103,7 +103,7 @@ dispatcher.onPost("/twiml", function (req, res) {
 dispatcher.onPost("/sms", function (req, res) {
   console.log("POST sms");
 
-  phone_number = req.params.From
+  phone_number = req.params.To
 
   console.log(req.params.Body + " " + phone_number);
 
@@ -114,7 +114,7 @@ dispatcher.onPost("/sms", function (req, res) {
 
     client.messages 
     .create({         
-      to: '+12107128563',
+      to: phone_number,
       body: reply,
       from: '+12107960644'
     })
