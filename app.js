@@ -221,36 +221,31 @@ const openai = new OpenAIApi(configuration);
 // helper open ai function
 
 const openai_reply = async (text, prompt_name) => {
-  if(prompt_name){    
-    let { data, error } = await supabase
-    .from('Prompts')
-    .select('name')
-    .eq('name', prompt_name)
 
-    console.log(data)
+  let { data, error } = await supabase
+  .from('Prompts')
+  .select('name')
+  .eq('name', prompt_name)
+  .single()
 
-    if(error){
-      console.log(error);
-    }else{
-      const saved_prompt = data.prompt
-
-      console.log(saved_prompt + "\n" + text)
-
-      const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: saved_prompt + text + "\n",
-        temperature: 0.7,
-        max_tokens: 1000,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
-      
-      console.log(response.data.choices[0].text);
-      return response.data.choices[0].text;
-    } 
+  if(error){
+    console.log(error);
   }else{
-    console.log("no saved prompt");
+    const saved_prompt = data.prompt
+
+    console.log(saved_prompt + "\n" + text)
+
+    const response = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: saved_prompt + text + "\n",
+      temperature: 0.7,
+      max_tokens: 1000,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
+    
+    return response.data.choices[0].text;
   }
 }
 
