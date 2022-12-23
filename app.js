@@ -228,6 +228,8 @@ const openai_reply = async (text, saved_prompt) => {
     .eq('name', saved_prompt)
     .single()
 
+    console.log(Prompts.prompt)
+
     if(error){
       console.log(error);
     }else{
