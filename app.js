@@ -115,7 +115,7 @@ dispatcher.onPost("/sms", function (req, res) {
     client.messages 
     .create({         
       to: '+12107128563',
-      body: 'hello',
+      body: reply,
       from: '+12107960644'
     })
     .then(message => console.log(message.sid)) 
