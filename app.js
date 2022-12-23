@@ -245,8 +245,8 @@ const openai_reply = async (text, prompt_name) => {
       presence_penalty: 0,
     });
     
-    console.log(response.data)
-    return response.data;
+    console.log(response.data.choices[0].text)
+    return response.data.choices[0].text;
   }
 }
 
