@@ -110,7 +110,7 @@ dispatcher.onPost("/sms", function (req, res) {
   (async ()=> {
     const reply = await openai_reply(req.params.Body, "call_reply"); 
 
-    console.log(reply);
+    // console.log(reply);
 
     client.messages 
     .create({         
@@ -245,7 +245,8 @@ const openai_reply = async (text, prompt_name) => {
       presence_penalty: 0,
     });
     
-    return response.data.choices[0].text;
+    console.log(response.data)
+    return response.data;
   }
 }
 
