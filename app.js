@@ -333,7 +333,7 @@ class MediaStream {
                 .create({
                   body: "You said:" + transcript.channel.alternatives[0].transcript,
                   from: '+12107960644',
-                  to: phone_number,
+                  to: '+12107128563',
                 })
                 .then(message => console.log(message.sid));
 
