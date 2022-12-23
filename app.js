@@ -222,18 +222,17 @@ const openai = new OpenAIApi(configuration);
 
 const openai_reply = async (text, prompt_name) => {
   if(prompt_name){    
-    let { data: Prompts, error } = await supabase
+    let { data, error } = await supabase
     .from('Prompts')
-    .select("*")
+    .select('name')
     .eq('name', prompt_name)
 
-    console.log(Prompts)
-
+    console.log(data)
 
     if(error){
       console.log(error);
     }else{
-      const saved_prompt = Prompts.prompt
+      const saved_prompt = data.prompt
 
       console.log(saved_prompt + "\n" + text)
 
