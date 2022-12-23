@@ -226,7 +226,9 @@ const openai_reply = async (text, prompt_name) => {
     .from('Prompts')
     .select("*")
     .eq('name', prompt_name)
-    .single()
+
+    console.log(Prompts)
+
 
     if(error){
       console.log(error);
