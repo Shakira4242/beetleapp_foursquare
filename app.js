@@ -224,7 +224,7 @@ const openai_reply = async (text, prompt_name) => {
 
   let { data, error } = await supabase
   .from('Prompts')
-  .select('name')
+  .select('*')
   .eq('name', prompt_name)
   .single()
 
