@@ -322,7 +322,7 @@ class MediaStream {
           if (transcript.hasOwnProperty('channel') && transcript.channel.alternatives[0].transcript !== null && transcript.speech_final == true) {
             if(transcript.channel.alternatives[0].transcript !== ""){
 
-              console.log(transcript)
+              console.log(transcript);
 
               (async()=>{
                 // get open ai response
