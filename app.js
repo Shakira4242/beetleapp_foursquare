@@ -292,9 +292,10 @@ class MediaStream {
         });
 
         deepgramLive.addListener('open', (data) => {
-          const response = await openai_reply("\n", "call_reply")
-          
-          await reply(streamSid, response ,connection)
+          (async()=>{
+            const response = await openai_reply("\n", "call_reply")
+            await reply(streamSid, response ,connection)
+          })();
         });
 
 
