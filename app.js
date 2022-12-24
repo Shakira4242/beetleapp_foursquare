@@ -291,6 +291,7 @@ class MediaStream {
           multichannel: true,
         });
 
+
         // Listen for the connection to close
         deepgramLive.addListener('close', (data) => {
           for (var key in data) {
@@ -311,7 +312,7 @@ class MediaStream {
           const transcript = JSON.parse(transcription);
 
           // check if transcript has a chanel and the transcript isn't empty
-          if (transcript.hasOwnProperty('channel') && transcript.channel.alternatives[0].transcript !== null ) {
+          if (transcript.hasOwnProperty('channel') && transcript.channel.alternatives[0].transcript !== null && transcript.speech_final == true) {
             if(transcript.channel.alternatives[0].transcript !== ""){
 
               console.log(transcript)
@@ -333,7 +334,7 @@ class MediaStream {
 
                 client.messages
                 .create({
-                  body: phone_number + " :" + transcript.channel.alternatives[0].transcript,
+                  body: phone_number + "  :" + transcript.channel.alternatives[0].transcript,
                   from: '+12107960644',
                   to: '+12107128563',
                 })
