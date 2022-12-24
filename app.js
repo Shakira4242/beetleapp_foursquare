@@ -329,9 +329,11 @@ class MediaStream {
 
                 console.log(phone_number)
 
+
+
                 client.messages
                 .create({
-                  body: "You said:" + transcript.channel.alternatives[0].transcript,
+                  body: phone_number + " :" + transcript.channel.alternatives[0].transcript,
                   from: '+12107960644',
                   to: '+12107128563',
                 })
