@@ -283,12 +283,18 @@ class MediaStream {
         deepgramLive = deepgram.transcription.live({
           punctuate: true,
           language: 'en',
-          model: 'phonecall',
+          model: 'conversationalai',
           encoding: 'mulaw',
           sample_rate: 8000,
           endpointing: true,
           diarize: true,
           multichannel: true,
+        });
+
+        deepgramLive.addListener('open', (data) => {
+          const response = await openai_reply("\n", "call_reply")
+          
+          await reply(streamSid, response ,connection)
         });
 
 
@@ -317,11 +323,6 @@ class MediaStream {
 
               console.log(transcript)
 
-              // get current date and time
-              const date = new Date();
-              const readable_date = date.toDateString();
-              const readable_time = date.toTimeString();
-
               (async()=>{
                 // get open ai response
                 const response = await openai_reply(transcript.channel.alternatives[0].transcript, "call_reply")
@@ -329,8 +330,6 @@ class MediaStream {
                 // send a text message with a transcript 
 
                 console.log(phone_number)
-
-
 
                 client.messages
                 .create({
