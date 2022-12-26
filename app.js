@@ -249,7 +249,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
       let { data: _, error } = await supabase
       .from('Chats')
       .insert([
-        { prompt: new_prompt.prompt, phone_number: new_prompt.phone_number, name: new_prompt.name  },
+        { prompt: new_prompt.prompt, phone_number: phone_number, name: new_prompt.name  },
       ])
 
       if (error) {
