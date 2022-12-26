@@ -108,7 +108,7 @@ dispatcher.onPost("/sms", function (req, res) {
   console.log(req.params.Body + " " + phone_number);
 
   (async ()=> {
-    const reply = await openai_reply(req.params.Body, "text_reply"); 
+    const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
 
     // console.log(reply);
 
@@ -220,34 +220,75 @@ const openai = new OpenAIApi(configuration);
 
 // helper open ai function
 
-const openai_reply = async (text, prompt_name) => {
+const openai_reply = async (text, prompt_name, phone_number) => {
 
-  let { data, error } = await supabase
-  .from('Prompts')
-  .select('*')
-  .eq('name', prompt_name)
-  .single()
+  let open_ai_prompt = null
+
+  // check if updated prompt exists
+
+  let { data: updated_prompt, error } = await supabase
+    .from('Chats')
+    .select('*')
+    .eq('phone_number', phone_number)
+    .single()
 
   if(error){
-    console.log(error);
-  }else{
-    const saved_prompt = data.prompt
 
-    console.log(saved_prompt + "\n" + text)
+    // if not create a new prompt from supabase
+    let { data: new_prompt, error } = await supabase
+    .from('Prompts')
+    .select('*')
+    .eq('name', prompt_name)
+    .single()
 
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: saved_prompt + text + "\n",
-      temperature: 0.7,
-      max_tokens: 1000,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0,
-    });
+    // then return the prompt
+    if (error) {
+      console.log(error)
+    } else {
+      // create new prompts in Chat table
+      let { data: _, error } = await supabase
+      .from('Chats')
+      .insert([
+        { prompt: new_prompt.prompt, phone_number: new_prompt.phone_number, name: new_prompt.name  },
+      ])
+
+      if (error) {
+        console.log(error)
+      } else {
+        console.log("new prompt created")
+
+        open_ai_prompt = new_prompt.prompt
+      }
+    }
+
+  }else if (updated_prompt){
     
-    console.log(response.data.choices[0].text)
-    return response.data.choices[0].text;
+    // if updated prompt exists return it
+    open_ai_prompt = updated_prompt.prompt
   }
+
+  // open ai request
+
+  const new_prompt = open_ai_prompt + "\n" + text
+
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: new_prompt,
+    temperature: 0.7,
+    max_tokens: 1000,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+  
+  // update prompt in supabase
+  let { data: new_updated_prompt, error: update_error } = await supabase
+  .from('Chats')
+  .update({ prompt: new_prompt + "\n" + response.data.choices[0].text })
+  .eq('phone_number', phone_number)
+  
+  console.log(response.data.choices[0].text)
+  return response.data.choices[0].text;
 }
 
 class MediaStream {
