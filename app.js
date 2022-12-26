@@ -269,7 +269,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
 
   // open ai request
 
-  const new_prompt = open_ai_prompt + "\n" + text
+  const new_prompt = open_ai_prompt + text
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
