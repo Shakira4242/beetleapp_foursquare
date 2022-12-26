@@ -269,7 +269,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
 
   // open ai request
 
-  const new_prompt = open_ai_prompt + "\n" + text
+  const new_prompt = open_ai_prompt + "\n" + text + "\n"
 
   console.log('prompt: ' + new_prompt)
 
@@ -277,7 +277,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
     model: "text-davinci-003",
     prompt: new_prompt,
     temperature: 0.7,
-    max_tokens: 1000,
+    max_tokens: 200,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
