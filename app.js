@@ -269,7 +269,9 @@ const openai_reply = async (text, prompt_name, phone_number) => {
 
   // open ai request
 
-  const new_prompt = open_ai_prompt + text
+  const new_prompt = open_ai_prompt + "\n" + text
+
+  console.log('prompt: ' + new_prompt)
 
   const response = await openai.createCompletion({
     model: "text-davinci-003",
@@ -284,7 +286,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
   // update prompt in supabase
   let { data: new_updated_prompt, error: update_error } = await supabase
   .from('Chats')
-  .update({ prompt: new_prompt + "\n" + response.data.choices[0].text })
+  .update({ prompt: new_prompt + response.data.choices[0].text })
   .eq('phone_number', phone_number)
   
   console.log(response.data.choices[0].text)
