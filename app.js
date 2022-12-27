@@ -106,29 +106,34 @@ dispatcher.onPost("/twiml", function (req, res) {
 dispatcher.onPost("/sms", function (req, res) {
   console.log("POST sms");
 
-  phone_number = req.params.From
+  // phone_number = req.params.From
+  // let to_phone_number = req.params.To
 
-  console.log(req.params.Body + " " + phone_number);
+  // console.log(req.params.Body + " " + phone_number);
 
-  (async ()=> {
-    const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
+  // (async ()=> {
+  //   const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
 
-    // console.log(reply);
+  //   // console.log(reply);
 
-    client.messages 
-    .create({         
-      to: text_back_number,
-      body: reply,
-      from: '+12107960644'
-    })
-    .then(message => console.log(message.sid)) 
-    .done();
+  //   client.messages 
+  //   .create({         
+  //     to: text_back_number,
+  //     body: reply,
+  //     from: to_phone_number
+  //   })
+  //   .then(message => console.log(message.sid)) 
+  //   .done();
 
-    res.writeHead(200, {
-      "Content-Type": "text/xml",
-    });
+  //   res.writeHead(200, {
+  //     "Content-Type": "text/xml",
+  //   });
 
-  })();
+  // })();
+
+  res.writeHead(200, {
+    "Content-Type": "text/xml",
+  });
 });
 
 mediaws.on("connect", function (connection) {
@@ -357,9 +362,9 @@ class MediaStream {
 
             client.messages
             .create({
-              body: `Hey 👋`,
+              body: `📱` + text_back_number + `just called. Message them back sms:` + text_back_number,
               from: '+12107960644',
-              to: text_back_number,
+              to: '+12107128563',
             })
             .then(message => console.log(message.sid));
           })();
@@ -398,14 +403,6 @@ class MediaStream {
                 // send a text message with a transcript 
 
                 console.log(phone_number)
-
-                client.messages
-                .create({
-                  body: `Hey 👋`,
-                  from: '+12107960644',
-                  to: text_back_number,
-                })
-                .then(message => console.log(message.sid));
 
                 let lines = [
                   `Hey! Let's get this conversation going over text!`,
