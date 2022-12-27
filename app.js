@@ -260,15 +260,12 @@ const openai_reply = async (text, prompt_name, phone_number) => {
         open_ai_prompt = new_prompt.prompt
       }
     }
-
   }else if (updated_prompt){
-    
     // if updated prompt exists return it
     open_ai_prompt = updated_prompt.prompt
   }
 
   // open ai request
-
   const new_prompt = open_ai_prompt + "\n" + text + "\n"
 
   console.log('prompt: ' + new_prompt)
@@ -336,8 +333,30 @@ class MediaStream {
 
         deepgramLive.addListener('open', (data) => {
           (async()=>{
-            const response = await openai_reply("", "call_reply")
-            await reply(streamSid, response ,connection)
+            let lines = [
+              `Hey! Let's get this conversation going over text!`,
+              `Hi! Let's text it out instead of talking on the phone!`,
+              `Hey! Let's skip the phone call and text it out!`,
+              `Hey! It's 2022. Let's text it out!`,
+              `Hey. Let's text it out instead of talking on the phone!`,
+              `Hey! Let's trade in the phonecall for some texting!`,
+              `Talking on the phone? Nah, let's text it out!`,
+              `Hey! Let's keep it digital and text it out!`,
+              `Hi! Let's chat it out via text instead!`
+            ];
+
+            let randomIndex = Math.floor(Math.random() * lines.length);
+            let randomLine = lines[randomIndex];
+
+            await reply(streamSid, randomLine ,connection);
+
+            client.messages
+            .create({
+              body: `Hey 👋`,
+              from: '+12107960644',
+              to: '+12107128563',
+            })
+            .then(message => console.log(message.sid));
           })();
         });
 
@@ -369,21 +388,36 @@ class MediaStream {
 
               (async()=>{
                 // get open ai response
-                const response = await openai_reply(transcript.channel.alternatives[0].transcript, "call_reply")
-                
+                // const response = await openai_reply(transcript.channel.alternatives[0].transcript, "call_reply")
+
                 // send a text message with a transcript 
 
                 console.log(phone_number)
 
                 client.messages
                 .create({
-                  body: phone_number + "  :" + transcript.channel.alternatives[0].transcript,
+                  body: `Hey 👋`,
                   from: '+12107960644',
                   to: '+12107128563',
                 })
                 .then(message => console.log(message.sid));
 
-                await reply(streamSid, response ,connection)
+                let lines = [
+                  `Hey! Let's get this conversation going over text!`,
+                  `Hi! Let's text it out instead of talking on the phone!`,
+                  `Hey! Let's skip the phone call and text it out!`,
+                  `Hey! It's 2022. Let's text it out!`,
+                  `Hey. Let's text it out instead of talking on the phone!`,
+                  `Hey! Let's trade in the phonecall for some texting!`,
+                  `Talking on the phone? Nah, let's text it out!`,
+                  `Hey! Let's keep it digital and text it out!`,
+                  `Hi! Let's chat it out via text instead!`
+                ];
+
+                let randomIndex = Math.floor(Math.random() * lines.length);
+                let randomLine = lines[randomIndex];
+
+                await reply(streamSid, randomLine ,connection)
               })();
             }
           }
