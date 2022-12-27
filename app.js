@@ -43,6 +43,8 @@ const REPEAT_THRESHOLD = 50;
 
 let phone_number = null
 
+let text_back_number = null
+
 // media websocket
 
 var mediaws = new WebSocketServer({
@@ -87,6 +89,7 @@ dispatcher.onPost("/twiml", function (req, res) {
   console.log("POST TwiML");
 
   phone_number = req.params.To
+  text_back_number = req.params.From
 
   var filePath = path.join(__dirname + "/templates", "streams.xml");
   var stat = fs.statSync(filePath);
@@ -114,7 +117,7 @@ dispatcher.onPost("/sms", function (req, res) {
 
     client.messages 
     .create({         
-      to: phone_number,
+      to: text_back_number,
       body: reply,
       from: '+12107960644'
     })
@@ -356,7 +359,7 @@ class MediaStream {
             .create({
               body: `Hey 👋`,
               from: '+12107960644',
-              to: '+12107128563',
+              to: text_back_number,
             })
             .then(message => console.log(message.sid));
           })();
@@ -400,7 +403,7 @@ class MediaStream {
                 .create({
                   body: `Hey 👋`,
                   from: '+12107960644',
-                  to: '+12107128563',
+                  to: text_back_number,
                 })
                 .then(message => console.log(message.sid));
 
