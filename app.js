@@ -348,15 +348,17 @@ class MediaStream {
             let randomIndex = Math.floor(Math.random() * lines.length);
             let randomLine = lines[randomIndex];
 
-            await reply(streamSid, randomLine ,connection);
+            console.log(randomLine)
 
-            client.messages
-            .create({
-              body: `Hey 👋`,
-              from: '+12107960644',
-              to: '+12107128563',
-            })
-            .then(message => console.log(message.sid));
+            // await reply(streamSid, randomLine ,connection);
+
+            // client.messages
+            // .create({
+            //   body: `Hey 👋`,
+            //   from: '+12107960644',
+            //   to: '+12107128563',
+            // })
+            // .then(message => console.log(message.sid));
           })();
         });
 
