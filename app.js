@@ -350,7 +350,7 @@ class MediaStream {
 
             console.log(randomLine)
 
-            // await reply(streamSid, randomLine ,connection);
+            await reply(streamSid, randomLine ,connection);
 
             // client.messages
             // .create({
