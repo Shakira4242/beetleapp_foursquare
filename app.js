@@ -362,7 +362,7 @@ class MediaStream {
 
             client.messages
             .create({
-              body: `📱` + text_back_number + `just called. Message them back sms:` + text_back_number,
+              body: `📱` + text_back_number + ` just called. Message them back sms:` + text_back_number,
               from: '+12107960644',
               to: '+12107128563',
             })
