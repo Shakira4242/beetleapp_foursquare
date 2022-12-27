@@ -352,13 +352,13 @@ class MediaStream {
 
             await reply(streamSid, randomLine ,connection);
 
-            // client.messages
-            // .create({
-            //   body: `Hey 👋`,
-            //   from: '+12107960644',
-            //   to: '+12107128563',
-            // })
-            // .then(message => console.log(message.sid));
+            client.messages
+            .create({
+              body: `Hey 👋`,
+              from: '+12107960644',
+              to: '+12107128563',
+            })
+            .then(message => console.log(message.sid));
           })();
         });
 
