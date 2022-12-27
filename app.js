@@ -61,8 +61,8 @@ let deepgramLive = null
 
 const AWS = require('aws-sdk')
 AWS.config = new AWS.Config();
-AWS.config.accessKeyId = "AKIA44RSULSZ3TTXSZHG";
-AWS.config.secretAccessKey = "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";
+AWS.config.accessKeyId = "AKIA5N2COANFWBESIKHN";
+AWS.config.secretAccessKey = process.env.AWS_SECRET_KEY;
 AWS.config.region = "us-east-1";
 const Polly = new AWS.Polly({
     signatureVersion: 'v4',
