@@ -1,5 +1,7 @@
 var fetch = require('node-fetch')
 
+
+
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Find your Account SID and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
@@ -15,25 +17,46 @@ const client = require('twilio')(accountSid, authToken);
 //     }
 // })
 
+let messaging_from = '+12108791875' 
 
+
+let from = '+12107563782'
 let phone_list = ['+12107128563']
+
+let bot_number = '+12107960644'
 
 let index = 0
 
 function updateState(){
-	// client.calls.create({
-	// 	machineDetection: 'Enable',
-	// 	AsyncAMD: 'true',
-	// 	url: 'https://8260-2603-8081-7001-c8a4-c932-7ae5-66ee-e93f.ngrok.io/twiml',
-	// 	from: '+12107960644',
-	// 	to: '+12107128563',
-	// });
+	for (var i = phone_list.length - 1; i >= 0; i--) {
 
-	client.messages.create({
-		body: 'sms:+12107960644 hey',
-		from: '+12107960644',
-		to: '+12107128563',
-	});
+		let to = phone_list[i]
+
+		call(from, to)
+
+		text(from, to, messaging_from)
+	}
+}
+
+
+function call(from, to){
+	client.calls.create({
+		statusCallback: 'https://cancel-call-3677.twil.io/path_1',
+		statusCallbackEvent: ['ringing'],
+		twiml: '<Response></Response>',
+		from: from,
+		to: to
+	})
+}
+
+function text(from, to, messaging_from){
+	setTimeout(function() {	
+		client.messages.create({
+			body: `📱` + `A new customer reached out to you from facebook.com. ` + `If you'd like to reach out to them directly text them at sms:` + bot_number,
+			from: messaging_from,
+			to: to
+		});
+	}, 5000);
 }
 
 updateState();

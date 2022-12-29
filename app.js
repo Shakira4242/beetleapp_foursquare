@@ -106,10 +106,7 @@ dispatcher.onPost("/twiml", function (req, res) {
 dispatcher.onPost("/sms", function (req, res) {
   console.log("POST sms");
 
-  // phone_number = req.params.From
-  // let to_phone_number = req.params.To
-
-  // console.log(req.params.Body + " " + phone_number);
+  console.log(req.params.Body)
 
   // (async ()=> {
   //   const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
@@ -118,7 +115,7 @@ dispatcher.onPost("/sms", function (req, res) {
 
   //   client.messages 
   //   .create({         
-  //     to: text_back_number,
+  //     to: req.params.From,
   //     body: reply,
   //     from: to_phone_number
   //   })
