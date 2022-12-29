@@ -106,7 +106,7 @@ dispatcher.onPost("/twiml", function (req, res) {
 dispatcher.onPost("/sms", function (req, res) {
   console.log("POST sms");
 
-  console.log(req.params.Body)
+  console.log(req.params.Body);
 
   (async ()=> {
     const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
