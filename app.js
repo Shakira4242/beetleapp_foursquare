@@ -108,25 +108,20 @@ dispatcher.onPost("/sms", function (req, res) {
 
   console.log(req.params.Body)
 
-  // (async ()=> {
-  //   const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
+  (async ()=> {
+    const reply = await openai_reply(req.params.Body, "text_reply", phone_number);
 
-  //   // console.log(reply);
+    // console.log(reply);
 
-  //   client.messages 
-  //   .create({         
-  //     to: req.params.From,
-  //     body: reply,
-  //     from: to_phone_number
-  //   })
-  //   .then(message => console.log(message.sid)) 
-  //   .done();
-
-  //   res.writeHead(200, {
-  //     "Content-Type": "text/xml",
-  //   });
-
-  // })();
+    client.messages 
+    .create({         
+      to: req.params.From,
+      body: reply,
+      from: req.params.To
+    })
+    .then(message => console.log(message.sid)) 
+    .done();
+  })();
 
   res.writeHead(200, {
     "Content-Type": "text/xml",
