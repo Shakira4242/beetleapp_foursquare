@@ -109,14 +109,18 @@ dispatcher.onPost("/sms", function (req, res) {
   console.log(req.params.Body);
 
   (async ()=> {
-    const reply = await openai_reply(req.params.Body, "text_reply", req.params.From);
+    const reply = await openai_reply('SERVICE: ' + req.params.Body, "text_reply", req.params.From);
 
     // console.log(reply);
+
+    function removeCustomer(str){
+      return str.replace("CUSTOMER: ","");
+    }
 
     client.messages 
     .create({         
       to: req.params.From,
-      body: reply,
+      body: removeCustomer(reply),
       from: req.params.To
     })
     .then(message => console.log(message.sid)) 
@@ -266,7 +270,7 @@ const openai_reply = async (text, prompt_name, phone_number) => {
   }
 
   // open ai request
-  const new_prompt = open_ai_prompt + "\n" + text + "\n"
+  const new_prompt = open_ai_prompt + "\n" + text
 
   console.log('prompt: ' + new_prompt)
 
