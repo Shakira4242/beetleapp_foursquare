@@ -117,14 +117,16 @@ dispatcher.onPost("/sms", function (req, res) {
       return str.replace("CUSTOMER: ","");
     }
 
-    client.messages 
-    .create({         
-      to: req.params.From,
-      body: removeCustomer(reply),
-      from: req.params.To
-    })
-    .then(message => console.log(message.sid)) 
-    .done();
+    if(reply){
+      client.messages 
+      .create({         
+        to: req.params.From,
+        body: removeCustomer(reply),
+        from: req.params.To
+      })
+      .then(message => console.log(message.sid)) 
+      .done();
+    }
   })();
 
   res.writeHead(200, {

@@ -32,7 +32,7 @@ function updateState(){
 
 		let to = phone_list[i]
 
-		call(from, to)
+		// call(from, to)
 
 		text(from, to, messaging_from)
 	}
@@ -49,14 +49,14 @@ function call(from, to){
 	})
 }
 
-function text(from, to, messaging_from){
+function text(from, to, messaging_from, platform){
 	setTimeout(function() {	
 		client.messages.create({
-			body: `📱` + `A new customer reached out to you from facebook.com. ` + `If you'd like to reach out to them directly text them at sms:` + bot_number,
+			body: `📱 ` + `We found you a new customer on Nextdoor. To reach out to them directly sign up for:` + bot_number,
 			from: messaging_from,
 			to: to
 		});
-	}, 5000);
+	}, 1000);
 }
 
 updateState();
