@@ -119,20 +119,19 @@ dispatcher.onPost("/sms", function (req, res) {
     }
 
     if(reply){
-      let randomTime = Math.floor(Math.random() * (10 - 3 + 1) + 3) * 60000;
+      // let randomTime = Math.floor(Math.random() * (10 - 3 + 1) + 3) * 60000;
+      
+      console.log("the customer phone: " + req.params.From + ", potential msg: " +  reply);
 
-      setTimeout(() => {
-        
-        client.messages 
-        .create({         
-          to: req.params.From,
-          body: removeCustomer(reply),
-          from: req.params.To
-        })
-        .then(message => console.log(message.sid)) 
-        .done();
+      // client.messages 
+      // .create({         
+      //   to: req.params.From,
+      //   body: removeCustomer(reply),
+      //   from: req.params.To
+      // })
+      // .then(message => console.log(message.sid)) 
+      // .done();
 
-      }, randomTime);
     }
   })();
 
