@@ -122,15 +122,15 @@ dispatcher.onPost("/sms", function (req, res) {
       
       console.log("the customer phone: " + req.params.From + ", potential msg: " +  reply);
 
-      // client.messages 
-      // .create({         
-      //   to: req.params.From,
-      //   body: removeCustomer(reply),
-      //   from: req.params.To
-      // })
-      // .then(message => console.log(message.sid)) 
-      // .done();
-      res.writeHead(501);
+      client.messages 
+      .create({         
+        to: '+12107128563',
+        body: req.params.From + "just replied and you should probably say '" + removeCustomer(reply) + "'",
+        from: '+12107960644'
+      })
+      .then(message => console.log(message.sid)) 
+      .done();
+      // res.writeHead(501);
     }
   })();
 
