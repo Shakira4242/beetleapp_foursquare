@@ -130,6 +130,7 @@ dispatcher.onPost("/sms", function (req, res) {
       // })
       // .then(message => console.log(message.sid)) 
       // .done();
+      res.writeHead(501);
     }
   })();
 
