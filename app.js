@@ -13,8 +13,7 @@ var wsserver = http.createServer(handleRequest);
 var save_recording = require('./components/save_recording.js')
 
 const accountSid = 'ACda04405f0b9725e854d6e81596d25921';
-const authToken = process.env.TWILIO_SECRET_KEY;
-const client = require('twilio')(accountSid, authToken);
+const client = require('twilio')(accountSid, process.env.TWILIO_SECRET_KEY);
 
 const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient('https://bpeqsefkefhjnfshvrck.supabase.co', process.env.SUPABASE_PUBLIC_KEY)
