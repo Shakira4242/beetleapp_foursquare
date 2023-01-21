@@ -119,8 +119,9 @@ dispatcher.onPost("/sms", function (req, res) {
     }
 
     if(reply){
+      let randomTime = Math.floor(Math.random() * (10 - 3 + 1) + 3) * 60000;
+
       setTimeout(() => {
-        let randomTime = Math.floor(Math.random() * (10 - 3 + 1) + 3) * 60000;
         
         client.messages 
         .create({         
