@@ -113,19 +113,25 @@ dispatcher.onPost("/sms", function (req, res) {
 
     // console.log(reply);
 
+
     function removeCustomer(str){
       return str.replace("CUSTOMER: ","");
     }
 
     if(reply){
-      client.messages 
-      .create({         
-        to: req.params.From,
-        body: removeCustomer(reply),
-        from: req.params.To
-      })
-      .then(message => console.log(message.sid)) 
-      .done();
+      setTimeout(() => {
+        let randomTime = Math.floor(Math.random() * (10 - 3 + 1) + 3) * 60000;
+        
+        client.messages 
+        .create({         
+          to: req.params.From,
+          body: removeCustomer(reply),
+          from: req.params.To
+        })
+        .then(message => console.log(message.sid)) 
+        .done();
+
+      }, randomTime);
     }
   })();
 
