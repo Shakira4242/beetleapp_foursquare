@@ -56,11 +56,13 @@ async function saveFile(file, name, phone){
 
   console.log(url)
 
-  if(!error){
-    const { data: something, error } = await supabase
-    .from('Leads')
-    .insert({ media: url, phone: phone});
-  }
+  // do not write to leads
+
+  // if(!error){
+  //   const { data: something, error } = await supabase
+  //   .from('Leads')
+  //   .insert({ media: url, phone: phone});
+  // }
 }
 
 module.exports = function(name, phone){
