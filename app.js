@@ -111,7 +111,7 @@ dispatcher.onPost("/sms", function (req, res) {
   (async ()=> {
     const reply = await openai_reply('SERVICE: ' + req.params.Body + "/n CUSTOMER: ", "text_reply", req.params.From);
 
-    // console.log(reply);
+    console.log(reply);
 
 
     function removeCustomer(str){
@@ -123,15 +123,14 @@ dispatcher.onPost("/sms", function (req, res) {
       
       console.log("the customer phone: " + req.params.From + ", potential msg: " +  reply);
 
-      // client.messages 
-      // .create({         
-      //   to: req.params.From,
-      //   body: removeCustomer(reply),
-      //   from: req.params.To
-      // })
-      // .then(message => console.log(message.sid)) 
-      // .done();
-
+      client.messages 
+      .create({         
+        to: req.params.From,
+        body: removeCustomer(reply),
+        from: req.params.To
+      })
+      .then(message => console.log(message.sid)) 
+      .done();
     }
   })();
 
